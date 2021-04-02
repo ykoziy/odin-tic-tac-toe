@@ -1,0 +1,52 @@
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+:root {
+    --baseFontSize: 1rem;
+    --h1FontSize: 2rem;
+    --cellFontSize: 6rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-container {
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightslategray;
+    padding: 1.5rem;
+}
+
+.game-title {
+    font-size: var(--h1FontSize);
+}
+
+.game-grid {
+    background-color: black;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    grid-gap: 5px 5px;
+}
+
+.cell {
+    width: 150px;
+    height: 150px;
+    background-color: coral;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--cellFontSize);
+}
+
+.cell:hover {
+    background-color: lightcoral;
+}
