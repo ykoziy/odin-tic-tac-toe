@@ -5,6 +5,7 @@
 :root {
     --baseFontSize: 1rem;
     --h1FontSize: 2rem;
+    --hugeH1FontSize: 4rem;
     --cellFontSize: 6rem;
 }
 
@@ -51,4 +52,42 @@ h1 {
 
 .cell:hover {
     background-color: lightcoral;
+}
+
+.game-status {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+}
+
+@keyframes slideFadeFromTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-200px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+}
+
+.game-status h1 {
+    font-size: var(--hugeH1FontSize);
+    color: red;
+    white-space: nowrap;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.show {
+    animation: slideFadeFromTop 2s;
+    visibility: visible;
 }
