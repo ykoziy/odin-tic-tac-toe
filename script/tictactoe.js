@@ -56,7 +56,11 @@ const gameBoard = (() => {
         }
     }
 
-    return {setCell, getCell, init, isFilled, isCellEmpty};
+    function getBoard() {
+        return _board;
+    }
+
+    return {setCell, getCell, init, isFilled, isCellEmpty, getBoard};
 })();
 
 const gameLogic = (() => {
