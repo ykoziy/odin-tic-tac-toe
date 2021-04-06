@@ -152,6 +152,9 @@ const gameController = (() => {
     }
 
     function move(index) {
+        if (!gameBoard.isCellEmpty(index)) {
+            return;
+        }
         const player = _players[_currentPlayer];
         const otherPlayer = _players[1 - _currentPlayer];
         if (player.getPlayerType() === "human") {
