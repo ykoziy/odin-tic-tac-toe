@@ -198,7 +198,7 @@ const gameController = (() => {
     }
 
     function _aiMove(player) {
-        let newMove = AiPlayer.randomAiMove();
+        let newMove = AiPlayer.findBestMove(gameBoard.getBoard(), player.getSymbol());
         gameLogic.makeMove(player, newMove);
         displayController.drawGameBoard();
     }
