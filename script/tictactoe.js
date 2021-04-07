@@ -29,7 +29,82 @@ const AiPlayer =(() => {
         return move;
     }
 
-    return {randomAiMove};
+    function _getPossibleMoves(board) {
+        let possibleMoves = [];
+        board.forEach((cell, index) => {
+            if (cell === "") {
+                possibleMoves.push(index);
+            }
+        });
+        return possibleMoves;
+    }
+
+    function findBestMove(board, symbol) {
+        let bestScore = -Infinity;
+        let bestMove = -1;
+        let player = symbol;
+        let opponent = "";
+        if (player === "X") {
+            opponent = "O"
+        } else {
+            opponent = "X"
+        }
+
+        _getPossibleMoves(board).forEach(move => {
+            let newBoard = [...board];
+            newBoard[move] = player;
+            let score = minimax(newBoard, undefined, false, player, opponent, -Infinity, Infinity);
+            if (score > bestScore) {
+                bestMove = move;
+                bestScore = score;
+            }
+        });
+        return bestMove;
+    }
+    
+    function minimax(board, depth = 100, maximizing, player, opponent, alpha, beta) {
+        if (gameLogic.checkWinState(player, board)) {
+            return 10;
+        } else if (gameLogic.checkWinState(opponent, board)) {
+            return -10;
+        } else if (gameLogic.checkDrawState(board)) {
+            return 0;
+        }
+
+        if (maximizing) {
+            let bestValue = -Infinity;
+            let moves = _getPossibleMoves(board);
+            for (let i = 0; i < moves.length; i++) {
+                let newBoard = [...board];
+                newBoard[moves[i]] = player;
+                let value = minimax(newBoard, depth + 1, false, player, opponent, alpha, beta);
+                bestValue = Math.max(bestValue, value);
+                alpha = Math.max(bestValue, alpha);
+                if (alpha >= beta) {
+                    break;
+                }
+            }
+            return bestValue;
+        }
+        if (!maximizing) {
+            let bestValue = Infinity;
+            let moves = _getPossibleMoves(board);
+            for (let i = 0; i < moves.length; i++) {
+                let newBoard = [...board];
+                newBoard[moves[i]] = opponent;
+                let value = minimax(newBoard, depth + 1, true, player, opponent, alpha, beta);
+                bestValue = Math.min(bestValue, value);
+                beta = Math.min(bestValue, beta);
+                if (alpha >= beta) {
+                    break;
+                }
+            }
+            return bestValue;
+        }
+
+    }
+
+    return {randomAiMove, minimax, findBestMove};
 })();
 
 const gameBoard = (() => {
