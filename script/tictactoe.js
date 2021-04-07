@@ -46,10 +46,6 @@ const gameBoard = (() => {
         return _board[index] === "";
     }
 
-    function isFilled() {
-        return _board.every(cell => cell !== "");
-    }
-
     function init() {
         for (let i = 0; i < _board.length; i++) {
             _board[i] = "";
@@ -60,7 +56,7 @@ const gameBoard = (() => {
         return _board;
     }
 
-    return {setCell, getCell, init, isFilled, isCellEmpty, getBoard};
+    return {setCell, getCell, init, isCellEmpty, getBoard};
 })();
 
 const gameLogic = (() => {
