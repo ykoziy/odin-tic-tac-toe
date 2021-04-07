@@ -70,12 +70,12 @@ const gameLogic = (() => {
     function makeMove(player, index) {
         const symbol = player.getSymbol();
         gameBoard.setCell(index, symbol);
-        if (_checkWinState(symbol)) {
+        if (checkWinState(symbol, gameBoard.getBoard())) {
             console.log(`${symbol} is winner`);
             _winner = symbol;
             _isRunning = false;
         } else {
-            if (_checkDrawState()) {
+            if (checkDrawState(gameBoard.getBoard())) {
                 console.log('a draw!');
                 _winner = "draw";
                 _isRunning = false;
@@ -97,15 +97,11 @@ const gameLogic = (() => {
         gameBoard.init();
     }
 
-    function _checkDrawState() {
-        if (gameBoard.isFilled()) {
-            return true;
-        } else {
-            return false;
-        }
+    function checkDrawState(board) {
+        return board.every(cell => cell !== "");
     }
 
-    function _checkWinState(symbol) {
+    function checkWinState(symbol, board) {
         const winStates = [
             [0, 3, 6],
             [1, 4, 7],
@@ -116,10 +112,10 @@ const gameLogic = (() => {
             [6, 4, 2],
             [0, 4, 8]
         ];
-        return winStates.some(state => state.every(idx => gameBoard.getCell(idx) === symbol))
+        return winStates.some(state => state.every(idx => board[idx] === symbol));
     }
 
-    return {makeMove, isGameRunning, getWinner, reset}
+    return {makeMove, isGameRunning, getWinner, reset, checkDrawState, checkWinState}
 })();
 
 const gameController = (() => {
