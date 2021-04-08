@@ -53,7 +53,7 @@ const AiPlayer =(() => {
         _getPossibleMoves(board).forEach(move => {
             let newBoard = [...board];
             newBoard[move] = player;
-            let score = minimax(newBoard, undefined, false, player, opponent, -Infinity, Infinity);
+            let score = minimax(newBoard, false, player, opponent, -Infinity, Infinity);
             if (score > bestScore) {
                 bestMove = move;
                 bestScore = score;
@@ -62,7 +62,7 @@ const AiPlayer =(() => {
         return bestMove;
     }
     
-    function minimax(board, depth = 100, maximizing, player, opponent, alpha, beta) {
+    function minimax(board, maximizing, player, opponent, alpha, beta) {
         if (gameLogic.checkWinState(player, board)) {
             return 10;
         } else if (gameLogic.checkWinState(opponent, board)) {
@@ -77,7 +77,7 @@ const AiPlayer =(() => {
             for (let i = 0; i < moves.length; i++) {
                 let newBoard = [...board];
                 newBoard[moves[i]] = player;
-                let value = minimax(newBoard, depth + 1, false, player, opponent, alpha, beta);
+                let value = minimax(newBoard, false, player, opponent, alpha, beta);
                 bestValue = Math.max(bestValue, value);
                 alpha = Math.max(bestValue, alpha);
                 if (alpha >= beta) {
@@ -92,7 +92,7 @@ const AiPlayer =(() => {
             for (let i = 0; i < moves.length; i++) {
                 let newBoard = [...board];
                 newBoard[moves[i]] = opponent;
-                let value = minimax(newBoard, depth + 1, true, player, opponent, alpha, beta);
+                let value = minimax(newBoard, true, player, opponent, alpha, beta);
                 bestValue = Math.min(bestValue, value);
                 beta = Math.min(bestValue, beta);
                 if (alpha >= beta) {
