@@ -190,7 +190,7 @@ const gameLogic = (() => {
 })();
 
 const gameController = (() => {
-    const _players = [Player('X', "human"), Player('O', "ai")]
+    let _players = [Player('X', "human"), Player('O', "ai")]
     let _currentPlayer = 0;
 
     function _toggleCurrentPlayer() {
@@ -222,6 +222,10 @@ const gameController = (() => {
         }
     }
 
+    function setPlayers(playerX, playerO) {
+        _players = [Player('X', playerX), Player('O', playerO)]
+    }
+
     function move(index) {
         if (!gameBoard.isCellEmpty(index)) {
             return;
@@ -244,15 +248,15 @@ const gameController = (() => {
         init();
     }
 
-    return {move, init, restart}
+    return {move, init, restart, setPlayers}
 })();
 
 const displayController = (() => {
     const _cells = document.querySelectorAll(".cell");
-    const _restartButton = document.querySelector(".restart-btn");
+    const _playButton = document.querySelector(".play-btn");
     const _statusBox = document.querySelector(".game-status");
 
-    _restartButton.addEventListener("click", _restart);
+    _playButton.addEventListener("click", _newGame);
     _statusBox.addEventListener("click", _handleStatusClick);
 
     _cells.forEach(cell => {
@@ -273,6 +277,15 @@ const displayController = (() => {
     }
 
     function _restart() {
+        gameController.restart();
+        drawGameBoard();
+    }
+
+    function _newGame() {
+        const playerX = document.getElementById("playerX").value;
+        const playerO = document.getElementById("playerO").value;
+        gameController.setPlayers(playerX, playerO);
+        _hideStatusMessage();
         gameController.restart();
         drawGameBoard();
     }
