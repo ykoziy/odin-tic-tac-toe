@@ -13,6 +13,28 @@
                 <div class="game-title">
                     <h1>Tic Tac Toe</h1>
                 </div>
+                <div class="game-settings">
+                    <div class="game-settings-top">
+                        <div class="game-settings-top-left">
+                            <label for="playerX">Player X:</label>
+                            <select name="playerX" id="playerX">
+                                <option value="human">Human</option>
+                                <option value="ai">Ai</option>
+                            </select>
+                        </div>
+
+                        <div class="game-settings-top-right">
+                            <label for="playerO">Player O:</label>
+                            <select name="playerO" id="playerO">
+                                <option value="human">Human</option>
+                                <option value="ai" selected>Ai</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="game-settings-bottom">
+                        <button class="play-btn">Play!</button>
+                    </div>
+                </div>
                 <div class="game-grid">
                     <div class="game-status hide"><h1>X won!</h1></div>
                     <div class="cell" data-index="0"></div>
