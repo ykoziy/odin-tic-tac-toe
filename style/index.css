@@ -4,17 +4,22 @@
 
 :root {
     --baseFontSize: 1rem;
+    --biggerFontSize: 1.2rem;
     --h1FontSize: 2rem;
     --hugeH1FontSize: 4rem;
-    --cellFontSize: 6rem;
+    --cellFontSize: 7rem;
+    --cellFont: "Gochi Hand", cursive;
+    --baseFont: "Ubuntu", sans-serif;
 }
 
 html {
     font-size: var(--baseFontSize);   
+    font-family: var(--baseFont);
 }
 
 h1 {
     font-size: var(--h1FontSize);
+    font-weight: bold;
     margin: 1rem;
     padding: 0.5rem;
 }
@@ -31,7 +36,6 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: lightslategray;
     padding: 1.5rem;
 }
 
@@ -46,15 +50,16 @@ h1 {
 .cell {
     width: 150px;
     height: 150px;
-    background-color: coral;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: var(--cellFontSize);
+    font-family: var(--cellFont);
 }
 
 .cell:hover {
-    background-color: lightcoral;
+    background-color: #F5F5F5;
 }
 
 .game-status {
@@ -101,7 +106,18 @@ h1 {
     align-items: center;
     width: 400px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    margin: 5px;
+    margin-bottom: 20px;
+    font-size: var(--biggerFontSize);
+    background-color: #E6ECF2;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+select {
+    font-size: var(--biggerFontSize);
 }
 
 .game-settings-top {
@@ -117,4 +133,27 @@ h1 {
 
 .play-btn {
     width: 100px;
+    font-size: var(--biggerFontSize);
+}
+
+@media only screen and (max-width: 500px) {
+    .game-container {
+        width: 280px;
+    }
+
+    .cell {
+        width: 100px;
+        height: 100px;
+    }
+
+    .game-settings {
+        width: 200px;
+        height: 140px;
+    }
+
+    .game-settings-top {
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+    }    
 }
