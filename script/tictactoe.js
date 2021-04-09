@@ -227,19 +227,28 @@ const gameController = (() => {
     }
 
     function move(index) {
-        if (!gameBoard.isCellEmpty(index)) {
+        if (!gameBoard.isCellEmpty(index) || !gameLogic.isGameRunning()) {
             return;
         }
         const player = _players[_currentPlayer];
         const otherPlayer = _players[1 - _currentPlayer];
-        if (player.getPlayerType() === "human") {
+/*         if (player.getPlayerType() === "human") {
             gameLogic.makeMove(_players[_currentPlayer], index);
             if (otherPlayer.getPlayerType() === "ai" && gameLogic.isGameRunning()) {
                 _aiMove(otherPlayer);
                 _toggleCurrentPlayer();
             }
         }
-        _toggleCurrentPlayer();
+        _toggleCurrentPlayer(); */
+        if (player.getPlayerType() === "human") {
+            gameLogic.makeMove(_players[_currentPlayer], index);
+            _toggleCurrentPlayer();
+        }
+
+        if (otherPlayer.getPlayerType() === "ai") {
+            _aiMove(otherPlayer);
+            _toggleCurrentPlayer();
+        }
     }
 
     function restart() {
