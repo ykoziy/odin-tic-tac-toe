@@ -136,6 +136,10 @@ select {
     font-size: var(--biggerFontSize);
 }
 
+.noHover {
+    pointer-events: none;
+}
+
 @media only screen and (max-width: 500px) {
     .game-container {
         width: 280px;

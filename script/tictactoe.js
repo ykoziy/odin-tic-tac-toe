@@ -325,10 +325,27 @@ const displayController = (() => {
         }
     }
 
+    function _setCellStyle(cell, index) {
+        let symbol = gameBoard.getCell(index);
+        if (!gameBoard.isCellEmpty(index)) {
+            cell.classList.add("noHover");
+            if (symbol.toUpperCase() === "X") {
+                cell.style.color = "indianred";
+            } else {
+                cell.style.color = "cornflowerblue";
+            }
+            
+        } else {
+            cell.classList.remove("noHover");
+            cell.removeAttribute("style");
+        }
+        cell.textContent = symbol;
+    }
+
     function drawGameBoard() {
         _cells.forEach(cell => {
             let index = cell.dataset.index;
-            cell.textContent = gameBoard.getCell(index);
+            _setCellStyle(cell, index);
         })
         if (!gameLogic.isGameRunning()) {
             _setStatusMessage(gameLogic.getWinner());
