@@ -209,6 +209,7 @@ const gameController = (() => {
             await _resolveAfterMs(1000);
             _aiMove(_players[_currentPlayer]);
             _toggleCurrentPlayer();
+            displayController.markPlayer(_currentPlayer);
         }
     }
 
@@ -223,9 +224,11 @@ const gameController = (() => {
     function init() {
         const player = _players[_currentPlayer];
         const otherPlayer = _players[1 - _currentPlayer];
+        displayController.markPlayer(_currentPlayer);
         if (player.getPlayerType() === "ai") {
             _aiMove(player);
             _toggleCurrentPlayer();
+            displayController.markPlayer(_currentPlayer);
             if (otherPlayer.getPlayerType() === "ai") {
                 _aiVsAi();
             }
@@ -246,12 +249,14 @@ const gameController = (() => {
         if (player.getPlayerType() === "human") {
             gameLogic.makeMove(_players[_currentPlayer], index);
             _toggleCurrentPlayer();
+            displayController.markPlayer(_currentPlayer);
         }
 
         if (otherPlayer.getPlayerType() === "ai") {
             await _resolveAfterMs(1000);
             _aiMove(otherPlayer);
             _toggleCurrentPlayer();
+            displayController.markPlayer(_currentPlayer);
         }
     }
 
@@ -268,6 +273,9 @@ const displayController = (() => {
     const _cells = document.querySelectorAll(".cell");
     const _playButton = document.querySelector(".play-btn");
     const _statusBox = document.querySelector(".game-status");
+
+    let _player1 = document.getElementById("p1");
+    let _player2 = document.getElementById("p2");
 
     _playButton.addEventListener("click", _newGame);
     _statusBox.addEventListener("click", _handleStatusClick);
@@ -353,6 +361,17 @@ const displayController = (() => {
         cell.textContent = symbol;
     }
 
+    function markPlayer(player) {
+        if (player === 0) {
+            _player2.classList.remove("current");
+            _player1.classList.add("current");
+        } else if (player === 1) {
+            _player1.classList.remove("current");
+            _player2.classList.add("current");
+        }
+
+    }    
+
     function drawGameBoard() {
         _cells.forEach(cell => {
             let index = cell.dataset.index;
@@ -364,7 +383,7 @@ const displayController = (() => {
         }
     }
     
-    return {drawGameBoard}
+    return {drawGameBoard, markPlayer}
 })();
 
 gameController.init();

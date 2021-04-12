@@ -140,6 +140,11 @@ select {
     pointer-events: none;
 }
 
+.current {
+    color: green;
+    text-decoration: underline;
+}
+
 @media only screen and (max-width: 500px) {
     .game-container {
         width: 280px;
