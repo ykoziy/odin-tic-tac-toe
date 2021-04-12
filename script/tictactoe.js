@@ -204,11 +204,20 @@ const gameController = (() => {
         displayController.drawGameBoard();
     }
 
-    function _aiVsAi() {
+    async function _aiVsAi() {
         while (gameLogic.isGameRunning()) {
+            await _resolveAfterMs(1000);
             _aiMove(_players[_currentPlayer]);
             _toggleCurrentPlayer();
         }
+    }
+
+    function _resolveAfterMs(ms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve('resolved');
+            }, ms);
+        });
     }
 
     function init() {
@@ -227,7 +236,7 @@ const gameController = (() => {
         _players = [Player('X', playerX), Player('O', playerO)]
     }
 
-    function move(index) {
+    async function move(index) {
         if (!gameBoard.isCellEmpty(index) || !gameLogic.isGameRunning()) {
             return;
         }
@@ -240,6 +249,7 @@ const gameController = (() => {
         }
 
         if (otherPlayer.getPlayerType() === "ai") {
+            await _resolveAfterMs(1000);
             _aiMove(otherPlayer);
             _toggleCurrentPlayer();
         }
