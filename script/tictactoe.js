@@ -193,6 +193,7 @@ const gameController = (() => {
 
     function _toggleCurrentPlayer() {
         _currentPlayer = 1 - _currentPlayer;
+        displayController.markPlayer(_currentPlayer);
     }
 
     function _aiMove(player) {
@@ -209,7 +210,6 @@ const gameController = (() => {
             await _resolveAfterMs(1000);
             _aiMove(_players[_currentPlayer]);
             _toggleCurrentPlayer();
-            displayController.markPlayer(_currentPlayer);
         }
     }
 
@@ -228,7 +228,6 @@ const gameController = (() => {
         if (player.getPlayerType() === "ai") {
             _aiMove(player);
             _toggleCurrentPlayer();
-            displayController.markPlayer(_currentPlayer);
             if (otherPlayer.getPlayerType() === "ai") {
                 _aiVsAi();
             }
@@ -249,14 +248,12 @@ const gameController = (() => {
         if (player.getPlayerType() === "human") {
             gameLogic.makeMove(_players[_currentPlayer], index);
             _toggleCurrentPlayer();
-            displayController.markPlayer(_currentPlayer);
         }
 
         if (otherPlayer.getPlayerType() === "ai") {
             await _resolveAfterMs(1000);
             _aiMove(otherPlayer);
             _toggleCurrentPlayer();
-            displayController.markPlayer(_currentPlayer);
         }
     }
 
