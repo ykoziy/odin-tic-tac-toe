@@ -196,6 +196,11 @@ const gameController = (() => {
         displayController.markPlayer(_currentPlayer);
     }
 
+    function _humanMove(player, index) {
+        gameLogic.makeMove(player, index);
+        _toggleCurrentPlayer();
+    }
+
     function _aiMove(player) {
         if (!gameLogic.isGameRunning()) {
             return;
@@ -203,13 +208,13 @@ const gameController = (() => {
         let newMove = AiPlayer.findBestMove(gameBoard.getBoard(), player.getSymbol());
         gameLogic.makeMove(player, newMove);
         displayController.drawGameBoard();
+        _toggleCurrentPlayer();
     }
 
     async function _aiVsAi() {
         while (gameLogic.isGameRunning()) {
             await _resolveAfterMs(1000);
             _aiMove(_players[_currentPlayer]);
-            _toggleCurrentPlayer();
         }
     }
 
@@ -221,13 +226,12 @@ const gameController = (() => {
         });
     }
 
-    function init() {
+    function firstMove() {
         const player = _players[_currentPlayer];
         const otherPlayer = _players[1 - _currentPlayer];
         displayController.markPlayer(_currentPlayer);
         if (player.getPlayerType() === "ai") {
             _aiMove(player);
-            _toggleCurrentPlayer();
             if (otherPlayer.getPlayerType() === "ai") {
                 _aiVsAi();
             }
@@ -246,24 +250,22 @@ const gameController = (() => {
         const otherPlayer = _players[1 - _currentPlayer];
 
         if (player.getPlayerType() === "human") {
-            gameLogic.makeMove(_players[_currentPlayer], index);
-            _toggleCurrentPlayer();
+            _humanMove(player, index);
         }
 
         if (otherPlayer.getPlayerType() === "ai") {
             await _resolveAfterMs(1000);
             _aiMove(otherPlayer);
-            _toggleCurrentPlayer();
         }
     }
 
     function restart() {
         _currentPlayer = 0;
         gameLogic.reset();
-        init();
+        firstMove();
     }
 
-    return {move, init, restart, setPlayers}
+    return {move, firstMove, restart, setPlayers}
 })();
 
 const displayController = (() => {
@@ -383,4 +385,4 @@ const displayController = (() => {
     return {drawGameBoard, markPlayer}
 })();
 
-gameController.init();
+gameController.firstMove();
