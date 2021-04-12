@@ -145,12 +145,10 @@ const gameLogic = (() => {
             console.log(`${symbol} is winner`);
             _winner = symbol;
             _isRunning = false;
-        } else {
-            if (checkDrawState(gameBoard.getBoard())) {
+        } else if (checkDrawState(gameBoard.getBoard())) {
                 console.log('a draw!');
                 _winner = "draw";
                 _isRunning = false;
-            }
         }
     }
 
