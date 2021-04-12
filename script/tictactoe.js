@@ -196,6 +196,9 @@ const gameController = (() => {
     }
 
     function _aiMove(player) {
+        if (!gameLogic.isGameRunning()) {
+            return;
+        }
         let newMove = AiPlayer.findBestMove(gameBoard.getBoard(), player.getSymbol());
         gameLogic.makeMove(player, newMove);
         displayController.drawGameBoard();
