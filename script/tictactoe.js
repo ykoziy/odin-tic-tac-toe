@@ -1,4 +1,5 @@
 "use strict";
+(() => {
 
 const Player = (symbol, playerType) => {
     let _symbol = symbol;
@@ -386,3 +387,5 @@ const displayController = (() => {
 })();
 
 gameController.firstMove();
+
+})();
